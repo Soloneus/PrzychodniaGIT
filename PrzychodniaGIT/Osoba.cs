@@ -6,6 +6,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+
+//Dodanie czegos 
+
 namespace PrzychodniaGIT
 {
     public enum EnumPlec { K, M }
