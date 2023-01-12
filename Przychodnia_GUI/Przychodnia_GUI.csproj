@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Projekt_Pryzchodnia">
+      <HintPath>..\..\Projekt_Pryzchodnia\Projekt_Pryzchodnia\bin\Debug\net6.0\Projekt_Pryzchodnia.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
