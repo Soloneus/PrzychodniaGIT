@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using PrzychodniaGIT;
+using static System.Net.Mime.MediaTypeNames;
 
 Lekarz przykladowyLekarz = new Lekarz("Jan", "Kowalski", "01.01.1980", "12345678901", EnumPlec.M, EnumSpecjalizacja.Dzieciecy, "32rfew",
             new Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>>
@@ -46,9 +47,13 @@ Console.WriteLine(przychodnia.LekarzWDanymDniu("12345678901", new DateTime(2022,
 przychodnia.ZakonczWizyte(new(w2, "Zapalenie płuc", "Paracetamol"));
 przychodnia.ZakonczWizyte(new(w6, "Nic", "Nic"));
 
-Console.WriteLine(przychodnia.HistoriaPacjenta("02463001875"));
+//Console.WriteLine(przychodnia.HistoriaPacjenta("02463001875"));
 Console.WriteLine(przychodnia.WszystkieWizyty());
 
+przychodnia.ZapiszXml("plik.xml");
+
+System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(przychodnia.GetType());
+x.Serialize(Console.Out, przychodnia);
 //przychodnia.UsuńPacjenta("02263001875");
 //Console.WriteLine(przychodnia.HistoriaPacjenta("02263001875"));
 

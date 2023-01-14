@@ -4,10 +4,12 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using PrzychodniaGIT;
 
 namespace PrzychodniaGIT
 {
+    [Serializable]
     public class Placówka
     {
         List<Lekarz> lekarze;
@@ -21,6 +23,7 @@ namespace PrzychodniaGIT
         public List<Lekarz> Lekarze { get => lekarze; set => lekarze = value; }
         public List<Wizyta> Wizyty { get => wizyty; set => wizyty = value; }
         public List<Pacjent> Pacjenci { get => pacjenci; set => pacjenci = value; }
+        
         public Placówka()
         {
             Lekarze = new();
@@ -98,7 +101,7 @@ namespace PrzychodniaGIT
             Wizyty.ToList().RemoveAll(p => p.Pacjent.Pesel == pesel);
             Pacjenci.Remove(p1);
         }
-        public string HistoriaPacjenta(string pesel)
+        /*public string HistoriaPacjenta(string pesel)
         {
             StringBuilder sb = new();
             Pacjent pacjent = Pacjenci.Find(p => p.Pesel == pesel);
@@ -106,7 +109,7 @@ namespace PrzychodniaGIT
             pacjent.HistoriaWizyt.ForEach(w => sb.AppendLine(w.ToString()));
             if (sb.ToString() == null) { return "Brak historii"; }
             return sb.ToString();
-        }
+        }*/
         public List<Wizyta> LekarzWDanymDniu(string pesel, DateTime data)
         {
 
@@ -116,6 +119,19 @@ namespace PrzychodniaGIT
         public List<Wizyta> WszystkieWizyty()
         {
             return Wizyty;
+        }
+        public void ZapiszXml(string fname)
+        {
+            using StreamWriter sw = new(fname);
+            XmlSerializer xs = new(typeof(Placówka));
+            xs.Serialize(sw, this);
+        }
+        public static Placówka OdczytajXml(string fname)
+        {
+            if (!File.Exists(fname)) { return null; }
+            using StreamReader sr = new(fname);
+            XmlSerializer xs = new(typeof(Placówka));
+            return xs.Deserialize(sr) as Placówka;
         }
     }
 }

@@ -7,14 +7,14 @@ using PrzychodniaGIT;
 
 namespace PrzychodniaGIT
 {
+    [Serializable]
     public class Pacjent : Osoba
     {
         List<Diagnoza> historiaWizyt;
-
         public Pacjent() : base() { HistoriaWizyt = new(); }
-        public Pacjent(string imie, string nazwisko, EnumPlec plec) : base(imie, nazwisko, plec) { HistoriaWizyt = new(); }
+        public Pacjent(string imie, string nazwisko, EnumPlec plec) : base(imie, nazwisko, plec) {  }
         public Pacjent(string imie, string nazwisko, string dataUrodzenia,
-            string pesel, EnumPlec plec, string hasło) : base(imie, nazwisko, dataUrodzenia, pesel, plec, hasło) { HistoriaWizyt = new(); }
+            string pesel, EnumPlec plec, string hasło) : base(imie, nazwisko, dataUrodzenia, pesel, plec, hasło) {  }
 
         public List<Diagnoza> HistoriaWizyt { get => historiaWizyt; set => historiaWizyt = value; }
 

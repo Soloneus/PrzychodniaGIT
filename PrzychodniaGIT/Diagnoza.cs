@@ -17,6 +17,7 @@ namespace PrzychodniaGIT
         public string Choroba { get => choroba; set => choroba = value; }
         public string Recepta { get => recepta; set => recepta = value; }
 
+        public Diagnoza() { }   
         public Diagnoza(Wizyta wizyta, string choroba, string recepta)
         {
             Wizyta = wizyta;

@@ -51,7 +51,7 @@ namespace PrzychodniaGIT
             }
         }
 
-        public bool SprawdzCzyWolny(string t, TimeSpan t1, TimeSpan t2)
+        /*public bool SprawdzCzyWolny(string t, TimeSpan t1, TimeSpan t2)
         {
             DateTime dzien = new DateTime();
             if (DateTime.TryParseExact(t,
@@ -81,7 +81,7 @@ namespace PrzychodniaGIT
             {
                 return false;
             }
-        }
+        }*/
         public override string ToString()
         {
             return $"Pacjent: {pacjent.Imie} {pacjent.Nazwisko} ({pacjent.Pesel})\nLekarz: {lekarz.Imie} {lekarz.Nazwisko} ({lekarz.Pesel})" +
