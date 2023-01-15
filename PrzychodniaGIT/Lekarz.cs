@@ -1,18 +1,27 @@
-﻿using System;
+﻿using PrzychodniaGIT;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PrzychodniaGIT
 {
+
     public enum EnumSpecjalizacja { Dzieciecy, Kardiolog, Okulista, Pedolog, Onkolog }
+
+    [DataContract]
     public class Lekarz : Osoba
     {
+
         EnumSpecjalizacja specjalizacja;
         Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> godzinyPracy;
 
+        [DataMember]
         public EnumSpecjalizacja Specjalizacja { get => specjalizacja; set => specjalizacja = value; }
+
+        [DataMember]
         public Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> GodzinyPracy { get => godzinyPracy; set => godzinyPracy = value; }
 
         public Lekarz()

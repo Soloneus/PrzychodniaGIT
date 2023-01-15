@@ -1,12 +1,15 @@
-﻿using System;
+﻿using PrzychodniaGIT;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 //sprawdzic czy lekarz moze przyjac ludzi - lambda w diagnoza
 //interfejsy
 namespace PrzychodniaGIT
 {
+    [DataContract]
     public class Wizyta
     {
         DateTime dataDo;
@@ -14,9 +17,14 @@ namespace PrzychodniaGIT
         Lekarz lekarz;
         Pacjent pacjent;
 
+        [DataMember]
         public DateTime DataDo { get => dataDo; set => dataDo = value; }
+
+        [DataMember]
         public DateTime DataOd { get => dataOd; set => dataOd = value; }
+        [DataMember]
         public Lekarz Lekarz { get => lekarz; set => lekarz = value; }
+        [DataMember]
         public Pacjent Pacjent { get => pacjent; set => pacjent = value; }
 
         public Wizyta()

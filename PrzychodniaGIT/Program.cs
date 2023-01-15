@@ -1,5 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-using PrzychodniaGIT;
+﻿using PrzychodniaGIT;
+
 
 Lekarz przykladowyLekarz = new Lekarz("Jan", "Kowalski", "01.01.1980", "12345678901", EnumPlec.M, EnumSpecjalizacja.Dzieciecy, "32rfew",
             new Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>>
@@ -49,6 +49,24 @@ przychodnia.ZakonczWizyte(new(w6, "Nic", "Nic"));
 Console.WriteLine(przychodnia.HistoriaPacjenta("02463001875"));
 Console.WriteLine(przychodnia.WszystkieWizyty());
 
+string fname = "przychodnia.xml";
+przychodnia.ZapiszDC(fname);
+
+Placówka zespolodczyt = Placówka.OdczytDC(fname);
+Console.WriteLine("Po odczycie:");
+
+Console.WriteLine(zespolodczyt.HistoriaPacjenta("02463001875"));
+
+foreach (Pacjent pt in przychodnia.Pacjenci)
+{
+    Console.WriteLine(pt);
+}
+
+foreach (Pacjent p in zespolodczyt.Pacjenci)
+{
+    Console.WriteLine(p);
+}
+zespolodczyt.UsuńPacjenta("02263001875");
 //przychodnia.UsuńPacjenta("02263001875");
 //Console.WriteLine(przychodnia.HistoriaPacjenta("02263001875"));
 
