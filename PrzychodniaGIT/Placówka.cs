@@ -19,6 +19,7 @@ namespace PrzychodniaGIT
         List<Wizyta> wizyty;
         TimeSpan godzinaOtwarcia;
         TimeSpan godzinaZamkniecia;
+        Dictionary<string, string> konta;
 
         [DataMember]
         public TimeSpan GodzinaOtwarcia { get => godzinaOtwarcia; set => godzinaOtwarcia = value; }
@@ -30,6 +31,8 @@ namespace PrzychodniaGIT
         public List<Wizyta> Wizyty { get => wizyty; set => wizyty = value; }
         [DataMember]
         public List<Pacjent> Pacjenci { get => pacjenci; set => pacjenci = value; }
+        public Dictionary<string, string> Konta { get => konta; set => konta = value; }
+
         public Placówka()
         {
             Lekarze = new();
@@ -37,6 +40,7 @@ namespace PrzychodniaGIT
             Wizyty = new();
             godzinaOtwarcia = new();
             godzinaZamkniecia = new();
+            Konta = new();
         }
 
         public Placówka(TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this()
@@ -126,6 +130,13 @@ namespace PrzychodniaGIT
             return Wizyty;
         }
 
+        public List<Wizyta> WizytyPacjenta(string pesel)
+        {
+            List<Wizyta> wizyty = new();
+            wizyty = Wizyty.FindAll(p=>p.Pacjent.Pesel== pesel);
+            return wizyty;
+        }
+
         public void ZapiszDC(string fname)
         {
             using FileStream fs = new(fname, FileMode.Create);
@@ -139,5 +150,31 @@ namespace PrzychodniaGIT
             DataContractSerializer dc = new(typeof(Placówka));
             return dc.ReadObject(fs) as Placówka;
         }
+
+        public void SortujWizyta()
+        {
+            Wizyty.Sort();
+        }
+
+        public List<Lekarz> WyszukajSpecjalizacja(string specjalizacja)
+        {
+            return Lekarze.FindAll(p=>p.Specjalizacja.Equals(specjalizacja));
+        }
+
+        public bool HasloRejestracjaPacjent(string pesel, string haslo)
+        {
+            if(Konta.Keys.First().Equals(pesel) != null) 
+            {
+                if(Pacjenci.FindAll(p=>p.Pesel == pesel) == null)
+                {
+                    return true;
+                }
+                return false;
+            }
+            Konta.Add(pesel, haslo);
+            return true;
+        }
+
+
     }
 }

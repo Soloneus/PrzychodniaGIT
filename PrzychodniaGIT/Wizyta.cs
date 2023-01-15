@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PrzychodniaGIT
 {
     [DataContract]
-    public class Wizyta
+    public class Wizyta : IComparable<Wizyta>
     {
         DateTime dataDo;
         DateTime dataOd;
@@ -94,6 +94,14 @@ namespace PrzychodniaGIT
         {
             return $"Pacjent: {pacjent.Imie} {pacjent.Nazwisko} ({pacjent.Pesel})\nLekarz: {lekarz.Imie} {lekarz.Nazwisko} ({lekarz.Pesel})" +
                 $"\nData: {DataOd:dd-MM-yyyy HH:mm}-{DataDo:HH:mm}\n";
+        }
+
+        public int CompareTo(Wizyta? other)
+        {
+            if(other == null) return 1;
+            int cmpdata = 0;
+            cmpdata = DataOd.CompareTo(other.DataOd);
+            return cmpdata;
         }
     }
 }

@@ -31,12 +31,5 @@ namespace PrzychodniaGIT
             HistoriaWizyt.Remove(d);
         }
 
-        public void ZmienHaslo(string starehasło, string nowehasło)
-        {
-            if (Hasło == starehasło)
-            {
-                Hasło = nowehasło;
-            }
-        }
     }
 }

@@ -29,8 +29,7 @@ namespace PrzychodniaGIT
         [DataMember]
         public EnumPlec Plec { get => plec; set => plec = value; }
         [DataMember]
-        public string Hasło { get => hasło; set => hasło = value; }
-        [DataMember]
+
         public string Pesel
         {
             get => pesel;
@@ -50,7 +49,6 @@ namespace PrzychodniaGIT
             Nazwisko = string.Empty;
             DataUrodzenia = DateTime.Now;
             Pesel = new string('0', 11);
-            Hasło = string.Empty;
         }
         public Osoba(string imie, string nazwisko, EnumPlec plec) : this()
         {
@@ -69,7 +67,6 @@ namespace PrzychodniaGIT
                 DataUrodzenia = res;
             }
             Pesel = pesel;
-            Hasło = hasło;
         }
 
         public int CompareTo(Osoba? other)

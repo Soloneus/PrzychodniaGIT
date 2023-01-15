@@ -9,29 +9,27 @@ using System.Threading.Tasks;
 namespace PrzychodniaGIT
 {
 
-    public enum EnumSpecjalizacja { Dzieciecy, Kardiolog, Okulista, Pedolog, Onkolog }
-
     [DataContract]
     public class Lekarz : Osoba
     {
 
-        EnumSpecjalizacja specjalizacja;
+        string specjalizacja;
         Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> godzinyPracy;
 
         [DataMember]
-        public EnumSpecjalizacja Specjalizacja { get => specjalizacja; set => specjalizacja = value; }
+        public string Specjalizacja { get => specjalizacja; set => specjalizacja = value; }
 
         [DataMember]
         public Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> GodzinyPracy { get => godzinyPracy; set => godzinyPracy = value; }
 
         public Lekarz()
         {
-            Specjalizacja = new EnumSpecjalizacja();
+            Specjalizacja = string.Empty;
             GodzinyPracy = new();
         }
 
         public Lekarz(string imie, string nazwisko, string dataUrodzenia, string pesel, EnumPlec plec,
-            EnumSpecjalizacja specjalizacja, string hasło, Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> godzinyPracy) : base(imie, nazwisko, dataUrodzenia, pesel, plec, hasło)
+            string specjalizacja, string hasło, Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> godzinyPracy) : base(imie, nazwisko, dataUrodzenia, pesel, plec, hasło)
         {
             Specjalizacja = specjalizacja;
             GodzinyPracy = godzinyPracy;
@@ -48,12 +46,5 @@ namespace PrzychodniaGIT
             return $"{Imie} {Nazwisko}, Specjalizacja: {Specjalizacja}\n{sb}";
         }
 
-        public void ZmienHaslo(string starehasło, string nowehasło)
-        {
-            if (Hasło == starehasło)
-            {
-                Hasło = nowehasło;
-            }
-        }
     }
 }
