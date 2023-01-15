@@ -1,22 +1,30 @@
-﻿using System;
+﻿using PrzychodniaGIT;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 //sprawdzic czy lekarz moze przyjac ludzi - lambda w diagnoza
 //interfejsy
 namespace PrzychodniaGIT
 {
-    public class Wizyta
+    [DataContract]
+    public class Wizyta : IComparable<Wizyta>
     {
         DateTime dataDo;
         DateTime dataOd;
         Lekarz lekarz;
         Pacjent pacjent;
 
+        [DataMember]
         public DateTime DataDo { get => dataDo; set => dataDo = value; }
+
+        [DataMember]
         public DateTime DataOd { get => dataOd; set => dataOd = value; }
+        [DataMember]
         public Lekarz Lekarz { get => lekarz; set => lekarz = value; }
+        [DataMember]
         public Pacjent Pacjent { get => pacjent; set => pacjent = value; }
 
         public Wizyta()
@@ -86,6 +94,14 @@ namespace PrzychodniaGIT
         {
             return $"Pacjent: {pacjent.Imie} {pacjent.Nazwisko} ({pacjent.Pesel})\nLekarz: {lekarz.Imie} {lekarz.Nazwisko} ({lekarz.Pesel})" +
                 $"\nData: {DataOd:dd-MM-yyyy HH:mm}-{DataDo:HH:mm}\n";
+        }
+
+        public int CompareTo(Wizyta? other)
+        {
+            if (other == null) return 1;
+            int cmpdata = 0;
+            cmpdata = DataOd.CompareTo(other.DataOd);
+            return cmpdata;
         }
     }
 }

@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using PrzychodniaGIT;
 
 namespace PrzychodniaGIT
 {
+    [DataContract]
+    [KnownType(typeof(Pacjent))]
+    [KnownType(typeof(Lekarz))]
     public class Placówka
     {
         List<Lekarz> lekarze;
@@ -15,12 +19,20 @@ namespace PrzychodniaGIT
         List<Wizyta> wizyty;
         TimeSpan godzinaOtwarcia;
         TimeSpan godzinaZamkniecia;
+        Dictionary<string, string> konta;
 
+        [DataMember]
         public TimeSpan GodzinaOtwarcia { get => godzinaOtwarcia; set => godzinaOtwarcia = value; }
+        [DataMember]
         public TimeSpan GodzinaZamkniecia { get => godzinaZamkniecia; set => godzinaZamkniecia = value; }
+        [DataMember]
         public List<Lekarz> Lekarze { get => lekarze; set => lekarze = value; }
+        [DataMember]
         public List<Wizyta> Wizyty { get => wizyty; set => wizyty = value; }
+        [DataMember]
         public List<Pacjent> Pacjenci { get => pacjenci; set => pacjenci = value; }
+        public Dictionary<string, string> Konta { get => konta; set => konta = value; }
+
         public Placówka()
         {
             Lekarze = new();
@@ -28,6 +40,7 @@ namespace PrzychodniaGIT
             Wizyty = new();
             godzinaOtwarcia = new();
             godzinaZamkniecia = new();
+            Konta = new();
         }
 
         public Placówka(TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this()
@@ -45,14 +58,13 @@ namespace PrzychodniaGIT
         public void DodajWizyte(Wizyta wizyta)
         {
             if (wizyta == null) { return; }
-            wizyty.Add(wizyta);
-            wizyty.ToList();
+            Wizyty.Add(wizyta);
         }
         public void ZakonczWizyte(Diagnoza diagnoza) //jak w WPF bedzie to idk czy to trzeba bedzie zmienic na inne argumenty
         {
             Wizyta w1 = diagnoza.Wizyta;
             w1.Pacjent.DodajDiagnoze(diagnoza);
-            wizyty.Remove(w1);
+            Wizyty.Remove(w1);
         }
 
         public void AnulujWizyteJakoLekarz(string pesel, DateTime dataod)
@@ -110,12 +122,59 @@ namespace PrzychodniaGIT
         public List<Wizyta> LekarzWDanymDniu(string pesel, DateTime data)
         {
 
-            List<Wizyta> wizytyulekarza = wizyty.ToList().FindAll(w => w.Lekarz.Pesel == pesel && w.DataOd.Date == data);
+            List<Wizyta> wizytyulekarza = Wizyty.FindAll(w => w.Lekarz.Pesel == pesel && w.DataOd.Date == data);
             return wizytyulekarza;
         }
         public List<Wizyta> WszystkieWizyty()
         {
             return Wizyty;
         }
+
+        public List<Wizyta> WizytyPacjenta(string pesel)
+        {
+            List<Wizyta> wizyty = new();
+            wizyty = Wizyty.FindAll(p => p.Pacjent.Pesel == pesel);
+            return wizyty;
+        }
+
+        public void ZapiszDC(string fname)
+        {
+            using FileStream fs = new(fname, FileMode.Create);
+            DataContractSerializer dc = new(typeof(Placówka));
+            dc.WriteObject(fs, this);
+        }
+        public static Placówka? OdczytDC(string fname)
+        {
+            if (!File.Exists(fname)) { return null; }
+            using FileStream fs = new(fname, FileMode.Open);
+            DataContractSerializer dc = new(typeof(Placówka));
+            return dc.ReadObject(fs) as Placówka;
+        }
+
+        public void SortujWizyta()
+        {
+            Wizyty.Sort();
+        }
+
+        public List<Lekarz> WyszukajSpecjalizacja(string specjalizacja)
+        {
+            return Lekarze.FindAll(p => p.Specjalizacja.Equals(specjalizacja));
+        }
+
+        public bool HasloRejestracjaPacjent(string pesel, string haslo)
+        {
+            if (Konta.Keys.First().Equals(pesel) != null)
+            {
+                if (Pacjenci.FindAll(p => p.Pesel == pesel) == null)
+                {
+                    return true;
+                }
+                return false;
+            }
+            Konta.Add(pesel, haslo);
+            return true;
+        }
+
+
     }
 }

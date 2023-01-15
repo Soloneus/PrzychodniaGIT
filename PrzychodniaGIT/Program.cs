@@ -1,7 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-using PrzychodniaGIT;
+﻿using PrzychodniaGIT;
 
-Lekarz przykladowyLekarz = new Lekarz("Jan", "Kowalski", "01.01.1980", "12345678901", EnumPlec.M, EnumSpecjalizacja.Dzieciecy, "32rfew",
+
+Lekarz przykladowyLekarz = new Lekarz("Jan", "Kowalski", "01.01.1980", "12345678901", EnumPlec.M, "Dzieciecy", "32rfew",
             new Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>>
             {
                 { DayOfWeek.Monday, new Tuple<TimeSpan, TimeSpan>(new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0)) },
@@ -10,6 +10,7 @@ Lekarz przykladowyLekarz = new Lekarz("Jan", "Kowalski", "01.01.1980", "12345678
                 { DayOfWeek.Thursday, new Tuple<TimeSpan, TimeSpan>(new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0)) },
                 { DayOfWeek.Friday, new Tuple<TimeSpan, TimeSpan>(new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0)) }
             });
+
 Console.WriteLine(przykladowyLekarz);
 
 Pacjent p1 = new("Mateusz", "Strojek", "30-06-2002", "02263001875", EnumPlec.M, "22");
@@ -20,6 +21,8 @@ Placówka przychodnia = new();
 przychodnia.DodajPacjenta(p1);
 przychodnia.DodajPacjenta(p2);
 przychodnia.DodajPacjenta(p3);
+
+przychodnia.DodajLekarza(przykladowyLekarz);
 
 Wizyta w1 = new("19-02-2022", przykladowyLekarz, p1);
 Wizyta w2 = new("20-02-2022", przykladowyLekarz, p2);
@@ -49,8 +52,36 @@ przychodnia.ZakonczWizyte(new(w6, "Nic", "Nic"));
 Console.WriteLine(przychodnia.HistoriaPacjenta("02463001875"));
 Console.WriteLine(przychodnia.WszystkieWizyty());
 
-//przychodnia.UsuńPacjenta("02263001875");
-//Console.WriteLine(przychodnia.HistoriaPacjenta("02263001875"));
+Console.WriteLine(przychodnia.Lekarze.Find(p => p.Specjalizacja == "Dzieciecy"));
+
+
+string fname = "przychodnia.xml";
+przychodnia.ZapiszDC(fname);
+
+Placówka zespolodczyt = Placówka.OdczytDC(fname);
+Console.WriteLine("Po odczycie:");
+
+Console.WriteLine(zespolodczyt.HistoriaPacjenta("02463001875"));
+
+foreach (Lekarz l in przychodnia.WyszukajSpecjalizacja("Dzieciecy"))
+{
+    Console.WriteLine(l);
+}
+
+foreach (Pacjent pt in przychodnia.Pacjenci)
+{
+    Console.WriteLine(pt);
+}
+
+foreach (Pacjent p in zespolodczyt.Pacjenci)
+{
+    Console.WriteLine(p);
+}
+
+
+zespolodczyt.UsuńPacjenta("02263001875");
+przychodnia.UsuńPacjenta("02263001875");
+Console.WriteLine(przychodnia.HistoriaPacjenta("02263001875"));
 
 
 //w1.SprawdzCzyWolny("27-12-2022", new TimeSpan(13, 0, 0), new TimeSpan(19, 0, 0));
