@@ -39,7 +39,7 @@ namespace PrzychodniaGIT
 
         public override string ToString()
         {
-            return $"Dzień: {Wizyta.DataOd:dd-MM-yyyy}, Diagnoza: {Choroba}, Recepta: {Recepta}";
+            return $"Dzień: {Wizyta.Data:dd-MM-yyyy}, Diagnoza: {Choroba}, Recepta: {Recepta}";
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using PrzychodniaGIT;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -12,95 +13,55 @@ namespace PrzychodniaGIT
     [DataContract]
     public class Wizyta : IComparable<Wizyta>
     {
-        DateTime dataDo;
-        DateTime dataOd;
+        DateTime data;
         Lekarz lekarz;
         Pacjent pacjent;
+        TimeSpan godzina;
 
         [DataMember]
-        public DateTime DataDo { get => dataDo; set => dataDo = value; }
-
-        [DataMember]
-        public DateTime DataOd { get => dataOd; set => dataOd = value; }
+        public DateTime Data { get => data; set => data = value; }
         [DataMember]
         public Lekarz Lekarz { get => lekarz; set => lekarz = value; }
         [DataMember]
         public Pacjent Pacjent { get => pacjent; set => pacjent = value; }
 
+        [DataMember]
+        public TimeSpan Godzina { get => godzina; set => godzina = value; }
+
         public Wizyta()
         {
             Lekarz = new Lekarz();
             Pacjent = new Pacjent();
-            DataOd = new DateTime();
-            DataDo = new DateTime();
+            Data = new DateTime();
+            Godzina = new TimeSpan();
         }
-        public Wizyta(string dataod, Lekarz lekarz, Pacjent pacjent) : this()
+        public Wizyta(string data, Lekarz lekarz, Pacjent pacjent, TimeSpan godzina) : this()
         {
-            if (DateTime.TryParseExact(dataod,
+            if (!DateTime.TryParseExact(data,
                 new string[] { "dd-MM-yyyy", "dd/MM/yyyy", "dd.MM.yyyy" ,"yyyy.MM.dd", "yyyy/MM/dd", "yyyy-MM-dd"
                 }, null, System.Globalization.DateTimeStyles.None,
                 out DateTime res))
             {
-                DataOd = res;
+                throw new DataException("Zły format daty!");
             }
+            Data = res;
             Lekarz = lekarz;
             Pacjent = pacjent;
-            DataDo = new DateTime(dataOd.Year, dataOd.Month, dataOd.Day, dataOd.Hour, dataOd.Minute + 45, 0);
+            Godzina = godzina;
         }
 
-        public Wizyta(string datado, string dataod, Lekarz lekarz, Pacjent pacjent) : this(dataod, lekarz, pacjent)
-        {
-            if (DateTime.TryParseExact(datado,
-                new string[] { "dd-MM-yyyy", "dd/MM/yyyy", "dd.MM.yyyy" ,"yyyy.MM.dd", "yyyy/MM/dd", "yyyy-MM-dd"
-                }, null, System.Globalization.DateTimeStyles.None,
-                out DateTime res))
-            {
-                DataDo = res;
-            }
-        }
 
-        public bool SprawdzCzyWolny(string t, TimeSpan t1, TimeSpan t2)
-        {
-            DateTime dzien = new DateTime();
-            if (DateTime.TryParseExact(t,
-                new string[] { "dd-MM-yyyy", "dd/MM/yyyy", "dd.MM.yyyy" ,"yyyy.MM.dd", "yyyy/MM/dd", "yyyy-MM-dd"
-                }, null, System.Globalization.DateTimeStyles.None,
-                out DateTime res))
-            {
-                dzien = res;
-            }
-
-            DayOfWeek dzienTygodnia = dzien.DayOfWeek;
-
-            if (Lekarz.GodzinyPracy.ContainsKey(dzien.DayOfWeek))
-            {
-                TimeSpan godzinaRozpoczecia = Lekarz.GodzinyPracy[dzienTygodnia].Item1;
-                TimeSpan godzinaZakonczenia = Lekarz.GodzinyPracy[dzienTygodnia].Item2;
-                if (t1 >= godzinaRozpoczecia && t1 < godzinaZakonczenia && t2 > t1 && t2 <= godzinaZakonczenia)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
         public override string ToString()
         {
             return $"Pacjent: {pacjent.Imie} {pacjent.Nazwisko} ({pacjent.Pesel})\nLekarz: {lekarz.Imie} {lekarz.Nazwisko} ({lekarz.Pesel})" +
-                $"\nData: {DataOd:dd-MM-yyyy HH:mm}-{DataDo:HH:mm}\n";
+                $"\nData: {Data:dd-MM-yyyy} {Godzina.Hours:00}:{Godzina.Minutes:00}\n";
         }
 
         public int CompareTo(Wizyta? other)
         {
             if (other == null) return 1;
             int cmpdata = 0;
-            cmpdata = DataOd.CompareTo(other.DataOd);
+            cmpdata = Data.CompareTo(other.Data);
             return cmpdata;
         }
     }

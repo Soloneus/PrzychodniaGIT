@@ -19,7 +19,7 @@ namespace PrzychodniaGIT
         public Pacjent() : base() { HistoriaWizyt = new(); }
         public Pacjent(string imie, string nazwisko, EnumPlec plec) : base(imie, nazwisko, plec) { HistoriaWizyt = new(); }
         public Pacjent(string imie, string nazwisko, string dataUrodzenia,
-            string pesel, EnumPlec plec, string hasło) : base(imie, nazwisko, dataUrodzenia, pesel, plec, hasło) { HistoriaWizyt = new(); }
+            string pesel, EnumPlec plec) : base(imie, nazwisko, dataUrodzenia, pesel, plec) { HistoriaWizyt = new(); }
 
         public void DodajDiagnoze(Diagnoza d)
         {

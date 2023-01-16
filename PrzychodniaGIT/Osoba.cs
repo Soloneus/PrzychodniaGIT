@@ -18,7 +18,6 @@ namespace PrzychodniaGIT
         DateTime dataUrodzenia;
         string pesel;
         private EnumPlec plec;
-        string hasło;
 
         [DataMember]
         public string Imie { get => imie; set => imie = value; }
@@ -57,7 +56,7 @@ namespace PrzychodniaGIT
             Plec = plec;
         }
         public Osoba(string imie, string nazwisko, string dataUrodzenia,
-            string pesel, EnumPlec plec, string hasło) : this(imie, nazwisko, plec)
+            string pesel, EnumPlec plec) : this(imie, nazwisko, plec)
         {
             if (DateTime.TryParseExact(dataUrodzenia,
                 new string[] { "dd-MM-yyyy", "dd/MM/yyyy", "dd.MM.yyyy" ,"yyyy.MM.dd", "yyyy/MM/dd", "yyyy-MM-dd"

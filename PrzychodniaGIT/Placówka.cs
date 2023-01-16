@@ -31,7 +31,10 @@ namespace PrzychodniaGIT
         public List<Wizyta> Wizyty { get => wizyty; set => wizyty = value; }
         [DataMember]
         public List<Pacjent> Pacjenci { get => pacjenci; set => pacjenci = value; }
+
+        [DataMember]
         public Dictionary<string, string> Konta { get => konta; set => konta = value; }
+
 
         public Placówka()
         {
@@ -58,7 +61,11 @@ namespace PrzychodniaGIT
         public void DodajWizyte(Wizyta wizyta)
         {
             if (wizyta == null) { return; }
-            Wizyty.Add(wizyta);
+            if (wizyta.Lekarz.SprawdzCzyMoznaUmowic(wizyta.Data.ToShortDateString(), wizyta.Godzina))
+            {
+                wizyta.Lekarz.Zaplanowane_Wizyty.Add(new Tuple<DateTime, TimeSpan>(wizyta.Data, wizyta.Godzina), true);
+                Wizyty.Add(wizyta);
+            }
         }
         public void ZakonczWizyte(Diagnoza diagnoza) //jak w WPF bedzie to idk czy to trzeba bedzie zmienic na inne argumenty
         {
@@ -67,22 +74,24 @@ namespace PrzychodniaGIT
             Wizyty.Remove(w1);
         }
 
-        public void AnulujWizyteJakoLekarz(string pesel, DateTime dataod)
+        public void AnulujWizyteJakoLekarz(string pesel, DateTime data, TimeSpan godzina)
         {
-            Wizyta wizyta = Wizyty.FirstOrDefault(w => w.Lekarz.Pesel == pesel && w.DataOd == dataod);
+            Wizyta wizyta = Wizyty.FirstOrDefault(w => w.Lekarz.Pesel == pesel && w.Data == data && w.Godzina == godzina);
             if (wizyta != null)
             {
                 Wizyty.Remove(wizyta);
+                wizyta.Lekarz.Zaplanowane_Wizyty.Remove(new Tuple<DateTime, TimeSpan>(data, godzina));
             }
             return;
         }
 
-        public void AnulujWizytePacjent(string pesel, DateTime dataod)
+        public void AnulujWizytePacjent(string pesel, DateTime data, TimeSpan godzina)
         {
-            Wizyta wizyta = Wizyty.FirstOrDefault(w => w.Pacjent.Pesel == pesel && w.DataOd == dataod);
+            Wizyta wizyta = Wizyty.FirstOrDefault(w => w.Pacjent.Pesel == pesel && w.Data == data && w.Godzina == godzina);
             if (wizyta != null)
             {
                 Wizyty.Remove(wizyta);
+                wizyta.Lekarz.Zaplanowane_Wizyty.Remove(new Tuple<DateTime, TimeSpan>(data, godzina));
             }
             return;
         }
@@ -105,9 +114,18 @@ namespace PrzychodniaGIT
         }
         public void UsuńPacjenta(string pesel)
         {
+            List<Wizyta> wizytyanulowane = new List<Wizyta>();
             Pacjent p1 = Pacjenci.Find(p => p.Pesel == pesel);
             if (Pacjenci.Find(p => p.Pesel == pesel) == null) { return; }
-            Wizyty.ToList().RemoveAll(p => p.Pacjent.Pesel == pesel);
+            wizytyanulowane = Wizyty.FindAll(p => p.Pacjent.Pesel == pesel);
+
+            foreach (Wizyta w in wizytyanulowane)
+            {
+                w.Lekarz.Zaplanowane_Wizyty.Remove(new Tuple<DateTime, TimeSpan>(w.Data, w.Godzina));
+            }
+
+            Wizyty.RemoveAll(p => p.Pacjent.Pesel == pesel);
+            Konta.Remove(pesel);
             Pacjenci.Remove(p1);
         }
         public string HistoriaPacjenta(string pesel)
@@ -122,7 +140,7 @@ namespace PrzychodniaGIT
         public List<Wizyta> LekarzWDanymDniu(string pesel, DateTime data)
         {
 
-            List<Wizyta> wizytyulekarza = Wizyty.FindAll(w => w.Lekarz.Pesel == pesel && w.DataOd.Date == data);
+            List<Wizyta> wizytyulekarza = Wizyty.FindAll(w => w.Lekarz.Pesel == pesel && w.Data.Date == data);
             return wizytyulekarza;
         }
         public List<Wizyta> WszystkieWizyty()
@@ -174,7 +192,5 @@ namespace PrzychodniaGIT
             Konta.Add(pesel, haslo);
             return true;
         }
-
-
     }
 }
