@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace PrzychodniaGIT
 {
-    internal class DayException
+    public class DayException : Exception
     {
+        public DayException() { }
+        public DayException(string message) : base(message) { }
     }
 }
