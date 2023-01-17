@@ -22,6 +22,7 @@ namespace Przychodnia_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        Placówka p = new();
         public MainWindow()
         {
             InitializeComponent();

@@ -51,6 +51,11 @@ przychodnia.DodajWizyte(w5);
 przychodnia.DodajWizyte(w6);
 przychodnia.DodajWizyte(w7);
 
+przychodnia.DodajKonto(p1.Pesel, "123456");
+przychodnia.DodajKonto(p2.Pesel, "hasło");
+przychodnia.DodajKonto(p3.Pesel, "password");
+przychodnia.DodajKonto(przykladowyLekarz.Pesel, "123123");
+przychodnia.DodajKonto(przykladowyLekarz1.Pesel, "lekarz");
 
 foreach (Wizyta w in przychodnia.Wizyty)
 {
@@ -59,7 +64,6 @@ foreach (Wizyta w in przychodnia.Wizyty)
 Console.WriteLine(przychodnia.Wizyty.Count.ToString());
 
 Console.WriteLine("-----------------------------------");
-przychodnia.UsuńPacjenta("02263001875");
 
 Console.WriteLine(przychodnia.Wizyty.Count.ToString());
 przychodnia.DodajWizyte(w8);
@@ -77,50 +81,52 @@ przychodnia.DodajWizyte(w1);
 
 
 
-//Console.WriteLine(przychodnia.WszystkieWizyty());
+Console.WriteLine(przychodnia.WszystkieWizyty());
 
-//foreach (Wizyta p in przychodnia.WizytyPacjenta("02263001875"))
-//{
-//    Console.WriteLine(p);
-//}
-//Console.WriteLine(przychodnia.WizytyPacjenta("02263001875"));
+foreach (Wizyta p in przychodnia.WizytyPacjenta("02263001875"))
+{
+    Console.WriteLine(p);
+}
+Console.WriteLine(przychodnia.WizytyPacjenta("02263001875"));
 
-//Console.WriteLine(przychodnia.LekarzWDanymDniu("12345678901", new DateTime(2022, 2, 21)));
-
-
-//przychodnia.ZakonczWizyte(new(w2, "Zapalenie płuc", "Paracetamol"));
-//przychodnia.ZakonczWizyte(new(w6, "Nic", "Nic"));
-
-//Console.WriteLine(przychodnia.HistoriaPacjenta("02463001875"));
-//Console.WriteLine(przychodnia.WszystkieWizyty());
-
-//Console.WriteLine(przychodnia.Lekarze.Find(p => p.Specjalizacja == "Dzieciecy"));
+Console.WriteLine(przychodnia.LekarzWDanymDniu("12345678901", new DateTime(2022, 2, 21)));
 
 
-//string fname = "przychodnia.xml";
-//przychodnia.ZapiszDC(fname);
+przychodnia.ZakonczWizyte(new(w2, "Zapalenie płuc", "Paracetamol"));
+przychodnia.ZakonczWizyte(new(w6, "Nic", "Nic"));
 
-//Placówka zespolodczyt = Placówka.OdczytDC(fname);
-//Console.WriteLine("Po odczycie:");
+Console.WriteLine(przychodnia.HistoriaPacjenta("02463001875"));
+Console.WriteLine(przychodnia.WszystkieWizyty());
 
-//Console.WriteLine(zespolodczyt.HistoriaPacjenta("02463001875"));
+Console.WriteLine(przychodnia.Lekarze.Find(p => p.Specjalizacja == "Dzieciecy"));
 
-//foreach (Lekarz l in przychodnia.WyszukajSpecjalizacja("Dzieciecy"))
-//{
-//    Console.WriteLine(l);
-//}
 
-//foreach (Pacjent pt in przychodnia.Pacjenci)
-//{
-//    Console.WriteLine(pt);
-//}
+string fname = "przychodnia.xml";
+przychodnia.ZapiszDC(fname);
 
-//foreach (Pacjent p in zespolodczyt.Pacjenci)
-//{
-//    Console.WriteLine(p);
-//}
+Placówka zespolodczyt = Placówka.OdczytDC(fname);
+Console.WriteLine("Po odczycie:");
 
-//Console.WriteLine(przykladowyLekarz.SprawdzCzyMoznaUmowic("22-11-2022", new TimeSpan(8, 0, 0)));
+Console.WriteLine(zespolodczyt.HistoriaPacjenta("02463001875"));
+
+foreach (Lekarz l in przychodnia.WyszukajSpecjalizacja("Dzieciecy"))
+{
+    Console.WriteLine(l);
+}
+
+foreach (Pacjent pt in przychodnia.Pacjenci)
+{
+    Console.WriteLine(pt);
+}
+
+foreach (Pacjent p in zespolodczyt.Pacjenci)
+{
+    Console.WriteLine(p);
+}
+
+Console.WriteLine(przykladowyLekarz.SprawdzCzyMoznaUmowic("22-11-2022", new TimeSpan(8, 0, 0)));
+
+Console.WriteLine(zespolodczyt.Konta.Count.ToString());
 
 //zespolodczyt.UsuńPacjenta("02263001875");
 //przychodnia.UsuńPacjenta("02263001875");

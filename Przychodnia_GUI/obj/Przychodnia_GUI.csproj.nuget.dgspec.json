@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\48784\\OneDrive\\Desktop\\Studia Informatyka i Ekonometria\\Rok 2\\Semestr 1\\Programowanie obiektowe\\Przychodnia_GUI\\Przychodnia_GUI\\Przychodnia_GUI.csproj": {}
+    "C:\\Users\\matti\\source\\repos\\new1\\Przychodnia_GUI\\Przychodnia_GUI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\48784\\OneDrive\\Desktop\\Studia Informatyka i Ekonometria\\Rok 2\\Semestr 1\\Programowanie obiektowe\\Przychodnia_GUI\\Przychodnia_GUI\\Przychodnia_GUI.csproj": {
+    "C:\\Users\\matti\\source\\repos\\new1\\Przychodnia_GUI\\Przychodnia_GUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\48784\\OneDrive\\Desktop\\Studia Informatyka i Ekonometria\\Rok 2\\Semestr 1\\Programowanie obiektowe\\Przychodnia_GUI\\Przychodnia_GUI\\Przychodnia_GUI.csproj",
+        "projectUniqueName": "C:\\Users\\matti\\source\\repos\\new1\\Przychodnia_GUI\\Przychodnia_GUI.csproj",
         "projectName": "Przychodnia_GUI",
-        "projectPath": "C:\\Users\\48784\\OneDrive\\Desktop\\Studia Informatyka i Ekonometria\\Rok 2\\Semestr 1\\Programowanie obiektowe\\Przychodnia_GUI\\Przychodnia_GUI\\Przychodnia_GUI.csproj",
-        "packagesPath": "C:\\Users\\48784\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\48784\\OneDrive\\Desktop\\Studia Informatyka i Ekonometria\\Rok 2\\Semestr 1\\Programowanie obiektowe\\Przychodnia_GUI\\Przychodnia_GUI\\obj\\",
+        "projectPath": "C:\\Users\\matti\\source\\repos\\new1\\Przychodnia_GUI\\Przychodnia_GUI.csproj",
+        "packagesPath": "C:\\Users\\matti\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\matti\\source\\repos\\new1\\Przychodnia_GUI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\48784\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\matti\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -58,7 +58,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

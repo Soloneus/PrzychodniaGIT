@@ -100,6 +100,12 @@ namespace PrzychodniaGIT
             Pacjenci.Add(p1);
         }
 
+        public void DodajKonto(string pesel, string haslo)
+        {
+            if (pesel == null || haslo == null) { return; }
+            Konta.Add(pesel, haslo);
+        }
+
         public void DodajLekarza(Lekarz l1)
         {
             Lekarze.Add(l1);
