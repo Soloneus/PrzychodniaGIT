@@ -187,9 +187,9 @@ namespace PrzychodniaGIT
 
         public bool HasloRejestracjaPacjent(string pesel, string haslo)
         {
-            if (Konta.Keys.First().Equals(pesel) != null)
+            if (Konta.ContainsKey(pesel))
             {
-                if (Pacjenci.FindAll(p => p.Pesel == pesel) == null)
+                if (Pacjenci.FindAll(p => p.Pesel == pesel).Count == 0)
                 {
                     return true;
                 }

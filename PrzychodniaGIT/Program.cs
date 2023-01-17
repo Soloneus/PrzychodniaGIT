@@ -128,6 +128,9 @@ Console.WriteLine(przykladowyLekarz.SprawdzCzyMoznaUmowic("22-11-2022", new Time
 
 Console.WriteLine(zespolodczyt.Konta.Count.ToString());
 
+
+Console.WriteLine(przychodnia.HasloRejestracjaPacjent("12345678901", "123123"));
+
 //zespolodczyt.UsuńPacjenta("02263001875");
 //przychodnia.UsuńPacjenta("02263001875");
 //Console.WriteLine(przychodnia.HistoriaPacjenta("02263001875"));
