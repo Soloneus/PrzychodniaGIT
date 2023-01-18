@@ -70,13 +70,14 @@ namespace PrzychodniaGIT
         public void ZakonczWizyte(Diagnoza diagnoza) //jak w WPF bedzie to idk czy to trzeba bedzie zmienic na inne argumenty
         {
             Wizyta w1 = diagnoza.Wizyta;
-            w1.Pacjent.DodajDiagnoze(diagnoza);
+            Pacjent p1 = Pacjenci.Find(p => p.Pesel == w1.Pacjent.Pesel);
+            p1.DodajDiagnoze(diagnoza);
             Wizyty.Remove(w1);
         }
 
         public void AnulujWizyteJakoLekarz(string pesel, DateTime data, TimeSpan godzina)
         {
-            Wizyta wizyta = Wizyty.FirstOrDefault(w => w.Lekarz.Pesel == pesel && w.Data == data && w.Godzina == godzina);
+            Wizyta wizyta = Wizyty.FirstOrDefault(w => w.Pacjent.Pesel == pesel && w.Data == data && w.Godzina == godzina);
             if (wizyta != null)
             {
                 Wizyty.Remove(wizyta);
@@ -183,6 +184,19 @@ namespace PrzychodniaGIT
         public List<Lekarz> WyszukajSpecjalizacja(string specjalizacja)
         {
             return Lekarze.FindAll(p => p.Specjalizacja.Equals(specjalizacja));
+        }
+
+        public List<Wizyta> WszystkieWizytyDanegoLekarza(string pesel)
+        {
+            return Wizyty.FindAll(p => p.Lekarz.Pesel == pesel);
+        }
+
+        public List<Wizyta> WszystkieWizytyDanejOsobyUDanegoLekarza(string pesellekarza, string peselpacjenta)
+        {
+            List<Wizyta> w = WszystkieWizytyDanegoLekarza(pesellekarza);
+            if (w == null) { return null; }
+            return w.FindAll(p => p.Pacjent.Pesel == peselpacjenta);
+
         }
 
         public bool HasloRejestracjaPacjent(string pesel, string haslo)

@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PrzychodniaGIT
 {
-    public class DayException : Exception
+    [DataContract]
+    public class DataException : Exception
     {
-        public DayException() { }
-        public DayException(string message) : base(message) { }
+        public DataException() { }
+        public DataException(string message) : base(message) { }
     }
 }

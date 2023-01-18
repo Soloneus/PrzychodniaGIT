@@ -1,7 +1,6 @@
 ﻿using PrzychodniaGIT;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 namespace PrzychodniaGIT
 {
     [DataContract]
-    public class Wizyta : IComparable<Wizyta>
+    public class Wizyta : IComparable<Wizyta>, IEquatable<Wizyta>
     {
         DateTime data;
         Lekarz lekarz;
@@ -63,6 +62,11 @@ namespace PrzychodniaGIT
             int cmpdata = 0;
             cmpdata = Data.CompareTo(other.Data);
             return cmpdata;
+        }
+
+        public bool Equals(Wizyta? other)
+        {
+            return other.Godzina.Equals(Godzina) && other.Data.Equals(Data) && other.Pacjent.Pesel == Pacjent.Pesel;
         }
     }
 }
