@@ -70,7 +70,7 @@ namespace PrzychodniaGIT
         public void ZakonczWizyte(Diagnoza diagnoza) //jak w WPF bedzie to idk czy to trzeba bedzie zmienic na inne argumenty
         {
             Wizyta w1 = diagnoza.Wizyta;
-            Pacjent p1 = Pacjenci.Find(p => p.Pesel == w1.Pacjent.Pesel);
+            Pacjent p1 = Pacjenci.Find(p => p.Equals(w1.Pacjent));
             p1.DodajDiagnoze(diagnoza);
             Wizyty.Remove(w1);
         }

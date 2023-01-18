@@ -10,7 +10,7 @@ using PrzychodniaGIT;
 namespace PrzychodniaGIT
 {
     [DataContract]
-    public class Pacjent : Osoba
+    public class Pacjent : Osoba, IEquatable<Pacjent>
     {
         List<Diagnoza> historiaWizyt;
 
@@ -31,5 +31,9 @@ namespace PrzychodniaGIT
             HistoriaWizyt.Remove(d);
         }
 
+        public bool Equals(Pacjent? other)
+        {
+            return Pesel.Equals(other.Pesel);
+        }
     }
 }
