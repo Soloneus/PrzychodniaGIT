@@ -60,7 +60,7 @@ namespace PrzychodniaGIT
 
         public void DodajWizyte(Wizyta wizyta)
         {
-            if (wizyta == null) { return; }
+            if (wizyta == null || Wizyty.Find(p => p.Lekarz.Pesel == wizyta.Lekarz.Pesel) == null) { return; }
             if (wizyta.Lekarz.SprawdzCzyMoznaUmowic(wizyta.Data.ToShortDateString(), wizyta.Godzina))
             {
                 wizyta.Lekarz.Zaplanowane_Wizyty.Add(new Tuple<DateTime, TimeSpan>(wizyta.Data, wizyta.Godzina), true);
@@ -98,6 +98,7 @@ namespace PrzychodniaGIT
         }
         public void DodajPacjenta(Pacjent p1)
         {
+            if (p1 == null) { return; }
             Pacjenci.Add(p1);
         }
 
@@ -109,6 +110,7 @@ namespace PrzychodniaGIT
 
         public void DodajLekarza(Lekarz l1)
         {
+            if (l1 == null || Lekarze.Find(p => p.Pesel == l1.Pesel) != null) { return; }
             Lekarze.Add(l1);
         }
 

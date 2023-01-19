@@ -12,7 +12,7 @@ namespace PrzychodniaGIT
 {
 
     [DataContract]
-    public class Lekarz : Osoba
+    public class Lekarz : Osoba, ICloneable
     {
 
         string specjalizacja;
@@ -106,5 +106,9 @@ namespace PrzychodniaGIT
             return $"{Imie} {Nazwisko}, Specjalizacja: {Specjalizacja}\n{sb}";
         }
 
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

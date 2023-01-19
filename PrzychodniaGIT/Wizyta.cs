@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PrzychodniaGIT
 {
     [DataContract]
-    public class Wizyta : IComparable<Wizyta>, IEquatable<Wizyta>
+    public class Wizyta : IComparable<Wizyta>
     {
         DateTime data;
         Lekarz lekarz;
@@ -61,12 +61,12 @@ namespace PrzychodniaGIT
             if (other == null) return 1;
             int cmpdata = 0;
             cmpdata = Data.CompareTo(other.Data);
+            if (cmpdata == 0)
+            {
+                return Godzina.CompareTo(other.Godzina);
+            }
             return cmpdata;
         }
 
-        public bool Equals(Wizyta? other)
-        {
-            return other.Godzina.Equals(Godzina) && other.Data.Equals(Data) && other.Pacjent.Pesel == Pacjent.Pesel;
-        }
     }
 }
