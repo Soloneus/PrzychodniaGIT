@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matti\\source\\repos\\new1\\Przychodnia_GUI\\Przychodnia_GUI.csproj": {}
+    "C:\\Users\\kajet\\source\\repos\\PrzychodniaGIT\\klasydiagram\\Przychodnia_GUI\\Przychodnia_GUI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matti\\source\\repos\\new1\\Przychodnia_GUI\\Przychodnia_GUI.csproj": {
+    "C:\\Users\\kajet\\source\\repos\\PrzychodniaGIT\\klasydiagram\\Przychodnia_GUI\\Przychodnia_GUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matti\\source\\repos\\new1\\Przychodnia_GUI\\Przychodnia_GUI.csproj",
+        "projectUniqueName": "C:\\Users\\kajet\\source\\repos\\PrzychodniaGIT\\klasydiagram\\Przychodnia_GUI\\Przychodnia_GUI.csproj",
         "projectName": "Przychodnia_GUI",
-        "projectPath": "C:\\Users\\matti\\source\\repos\\new1\\Przychodnia_GUI\\Przychodnia_GUI.csproj",
-        "packagesPath": "C:\\Users\\matti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matti\\source\\repos\\new1\\Przychodnia_GUI\\obj\\",
+        "projectPath": "C:\\Users\\kajet\\source\\repos\\PrzychodniaGIT\\klasydiagram\\Przychodnia_GUI\\Przychodnia_GUI.csproj",
+        "packagesPath": "C:\\Users\\kajet\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\kajet\\source\\repos\\PrzychodniaGIT\\klasydiagram\\Przychodnia_GUI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\matti\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\kajet\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -58,7 +58,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
