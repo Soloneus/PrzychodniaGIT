@@ -38,7 +38,7 @@ Lekarz przykladowyLekarz3 = new Lekarz("Patryk", "Opl", "01.01.1990", "903123456
                 { DayOfWeek.Thursday, new Tuple<TimeSpan, TimeSpan>(new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0)) },
                 { DayOfWeek.Friday, new Tuple<TimeSpan, TimeSpan>(new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0)) }
             });
-Lekarz przykladowyLekarz4 = new Lekarz("Mariusz", "Pudzianowski", "01.01.1990", "903812345677", EnumPlec.M, "Dzieciecy",
+Lekarz przykladowyLekarz4 = new Lekarz("Mariusz", "Pudzianowski", "01.01.1990", "90381234567", EnumPlec.M, "Dzieciecy",
             new Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>>
             {
                 { DayOfWeek.Monday, new Tuple<TimeSpan, TimeSpan>(new TimeSpan(8, 0, 0), new TimeSpan(15, 0, 0)) },
@@ -53,7 +53,7 @@ Pacjent p1 = new("Adam", "Małysz", "30-06-1980", "02263001875", EnumPlec.M);
 Pacjent p2 = new("Jan", "Nowak", "30-01-2006", "02463001875", EnumPlec.M);
 Pacjent p3 = new("Julia", "Jak", "30-01-1999", "02453001875", EnumPlec.K);
 
-Placówka przychodnia = new();
+Placówka przychodnia = new(new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0));
 przychodnia.DodajPacjenta(p1);
 przychodnia.DodajPacjenta(p2);
 przychodnia.DodajPacjenta(p3);
@@ -74,6 +74,25 @@ przychodnia.DodajKonto(przykladowyLekarz2.Pesel, "0911d");
 przychodnia.DodajKonto(przykladowyLekarz3.Pesel, "0911e");
 przychodnia.DodajKonto(przykladowyLekarz4.Pesel, "0911f");
 
+
+Wizyta w1 = new("19-05-2023", przykladowyLekarz, p1, new TimeSpan(9, 0, 0));
+Wizyta w2 = new("20-02-2023", przykladowyLekarz, p2, new TimeSpan(8, 0, 0));
+Wizyta w3 = new("23-02-2023", przykladowyLekarz, p3, new TimeSpan(8, 0, 0));
+Wizyta w4 = new("23-02-2023", przykladowyLekarz, p1, new TimeSpan(9, 0, 0));
+Wizyta w5 = new("23-01-2023", przykladowyLekarz1, p2, new TimeSpan(16, 0, 0));
+Wizyta w6 = new("20-02-2023", przykladowyLekarz, p2, new TimeSpan(9, 0, 0));
+Wizyta w7 = new("21-02-2023", przykladowyLekarz, p1, new TimeSpan(7, 0, 0));
+Wizyta w8 = new("19-05-2023", przykladowyLekarz, p2, new TimeSpan(9, 0, 0));
+Wizyta w9 = new("23-02-2023", przykladowyLekarz, p2, new TimeSpan(9, 0, 0));
+
+przychodnia.DodajWizyte(w5);
+przychodnia.DodajWizyte(w1);
+przychodnia.DodajWizyte(w2);
+przychodnia.DodajWizyte(w3);
+przychodnia.DodajWizyte(w4);
+przychodnia.DodajWizyte(w6);
+przychodnia.DodajWizyte(w7);
+Console.WriteLine("================");
 foreach (var d in przychodnia.Konta)
 {
     Console.WriteLine(d);
@@ -84,44 +103,36 @@ foreach (Pacjent p in przychodnia.Pacjenci)
     Console.WriteLine(p);
 }
 
-foreach (Lekarz l in przychodnia.Lekarze)
+foreach (Wizyta l in przychodnia.Wizyty)
+{
+    Console.WriteLine(l);
+}
+przychodnia.UsuńPacjenta("02263001875");
+Console.WriteLine("================");
+Lekarz ls = przychodnia.Lekarze.Find(p => p.Pesel == "12345678901");
+
+
+Console.WriteLine(przychodnia.Lekarze.Find(p => p.Pesel == "12345678901").SprawdzCzyMoznaUmowic("23-02-2023", new TimeSpan(9, 0, 0)));
+
+Console.WriteLine(przychodnia.Lekarze.Find(p => p.Pesel == "12345678901").SprawdzCzyMoznaUmowic("23-02-2023", new TimeSpan(9, 0, 0)));
+przychodnia.Lekarze[0].SprawdzCzyMoznaUmowic("23-02-2023", new TimeSpan(9, 0, 0));
+
+foreach (var d in przychodnia.Konta)
+{
+    Console.WriteLine(d);
+}
+
+foreach (Pacjent p in przychodnia.Pacjenci)
+{
+    Console.WriteLine(p);
+}
+
+foreach (Wizyta l in przychodnia.Wizyty)
 {
     Console.WriteLine(l);
 }
 
-Wizyta w1 = new("19-05-2023", przykladowyLekarz, p1, new TimeSpan(9, 0, 0));
-Wizyta w2 = new("20-02-2023", przykladowyLekarz, p2, new TimeSpan(8, 0, 0));
-Wizyta w3 = new("23-02-2023", przykladowyLekarz, p3, new TimeSpan(8, 0, 0));
-Wizyta w4 = new("23-02-2023", przykladowyLekarz, p1, new TimeSpan(9, 0, 0));
-Wizyta w5 = new("23-01-2023", przykladowyLekarz1, p2, new TimeSpan(16, 0, 0));
-Wizyta w6 = new("20-02-2023", przykladowyLekarz, p2, new TimeSpan(9, 0, 0));
-Wizyta w7 = new("21-02-2023", przykladowyLekarz, p1, new TimeSpan(7, 0, 0));
-Wizyta w8 = new("19-05-2023", przykladowyLekarz, p2, new TimeSpan(9, 0, 0));
-
-przychodnia.DodajWizyte(w5);
-
-foreach (Wizyta a in przychodnia.WszystkieWizytyDanegoLekarza("90312345678"))
-{
-    Console.WriteLine(a);
-}
-
-Console.WriteLine("---------");
-
-przychodnia.DodajWizyte(w1);
-przychodnia.DodajWizyte(w2);
-przychodnia.DodajWizyte(w3);
-przychodnia.DodajWizyte(w4);
-przychodnia.DodajWizyte(w6);
-przychodnia.DodajWizyte(w7);
-
-
-
-foreach (Wizyta w in przychodnia.Wizyty)
-{
-    Console.WriteLine(w);
-}
-
-Console.WriteLine("----");
+Console.WriteLine("================");
 foreach (Wizyta w in przychodnia.WszystkieWizytyDanegoLekarza("12345678901"))
 {
     Console.WriteLine(w);
