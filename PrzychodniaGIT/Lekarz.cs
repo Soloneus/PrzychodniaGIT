@@ -34,8 +34,28 @@ namespace PrzychodniaGIT
             Specjalizacja = string.Empty;
             GodzinyPracy = new();
             zaplanowane_Wizyty = new();
+            Imie = string.Empty;
+            Nazwisko = string.Empty;
+            DataUrodzenia = new();
+            Pesel = "00000000000";
         }
 
+        public Lekarz(string imie, string nazwisko, string dataUrodzenia, string pesel, EnumPlec plec)
+        {
+            if (!DateTime.TryParseExact(dataUrodzenia,
+                new string[] { "dd-MM-yyyy", "dd/MM/yyyy", "dd.MM.yyyy" ,"yyyy.MM.dd", "yyyy/MM/dd", "yyyy-MM-dd"
+                }, null, System.Globalization.DateTimeStyles.None,
+                out DateTime res))
+            {
+                throw new ArgumentException("Zła data");
+            }
+
+            Imie = imie;
+            Nazwisko = nazwisko;
+            DataUrodzenia = res;
+            Pesel = pesel;
+            Plec = plec;
+        }
         public Lekarz(string imie, string nazwisko, string dataUrodzenia, string pesel, EnumPlec plec,
             string specjalizacja, Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> godzinyPracy) : base(imie, nazwisko, dataUrodzenia, pesel, plec)
         {
