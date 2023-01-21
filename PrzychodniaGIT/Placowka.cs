@@ -12,7 +12,7 @@ namespace PrzychodniaGIT
     [DataContract]
     [KnownType(typeof(Pacjent))]
     [KnownType(typeof(Lekarz))]
-    public class Placówka
+    public class Placowka
     {
         List<Lekarz> lekarze;
         List<Pacjent> pacjenci;
@@ -36,7 +36,7 @@ namespace PrzychodniaGIT
         public Dictionary<string, string> Konta { get => konta; set => konta = value; }
 
 
-        public Placówka()
+        public Placowka()
         {
             Lekarze = new();
             Pacjenci = new();
@@ -46,12 +46,12 @@ namespace PrzychodniaGIT
             Konta = new();
         }
 
-        public Placówka(TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this()
+        public Placowka(TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this()
         {
             GodzinaOtwarcia = godzinaOtwarcia;
             GodzinaZamkniecia = godzinaZamkniecia;
         }
-        public Placówka(List<Lekarz> lekarze, List<Pacjent> pacjenci, List<Wizyta> wizyty, TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this(godzinaOtwarcia, godzinaZamkniecia)
+        public Placowka(List<Lekarz> lekarze, List<Pacjent> pacjenci, List<Wizyta> wizyty, TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this(godzinaOtwarcia, godzinaZamkniecia)
         {
             Lekarze = lekarze;
             Pacjenci = pacjenci;
