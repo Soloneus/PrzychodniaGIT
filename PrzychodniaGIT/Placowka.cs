@@ -12,10 +12,7 @@ namespace PrzychodniaGIT
     [DataContract]
     [KnownType(typeof(Pacjent))]
     [KnownType(typeof(Lekarz))]
-    /// <summary>
-    /// Klasa Placowka
-    /// </summary>
-    public class Placowka
+    public class Placówka
     {
         List<Lekarz> lekarze;
         List<Pacjent> pacjenci;
@@ -49,10 +46,8 @@ namespace PrzychodniaGIT
         /// </summary>
         public Dictionary<string, string> Konta { get => konta; set => konta = value; }
 
-        /// <summary>
-        /// Konstruktor domyślny klasy <see cref="Placowka"/>.
-        /// </summary>
-        public Placowka()
+
+        public Placówka()
         {
             Lekarze = new();
             Pacjenci = new();
@@ -61,25 +56,13 @@ namespace PrzychodniaGIT
             godzinaZamkniecia = new();
             Konta = new();
         }
-        /// <summary>
-        /// Konstruktor parametryczny klasy <see cref="Placowka"/>.
-        /// </summary>
-        /// <param name="godzinaOtwarcia">Godzina otwarcia placówki</param>
-        /// <param name="godzinaZamkniecia">Godzina zamkniecia placówki</param>
-        public Placowka(TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this()
+
+        public Placówka(TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this()
         {
             GodzinaOtwarcia = godzinaOtwarcia;
             GodzinaZamkniecia = godzinaZamkniecia;
         }
-        /// <summary>
-        /// Konstruktor parametryczny klasy <see cref="Placowka"/>.
-        /// </summary>
-        /// <param name="lekarze">Lekarze w placówce</param>
-        /// <param name="pacjenci">Pacjenci w placówce</param>
-        /// <param name="wizyty">Wizyty w placówce</param>
-        /// <param name="godzinaOtwarcia">Godzina otwarcia placówki</param>
-        /// <param name="godzinaZamkniecia">Godzina zamkniecia placówki</param>
-        public Placowka(List<Lekarz> lekarze, List<Pacjent> pacjenci, List<Wizyta> wizyty, TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this(godzinaOtwarcia, godzinaZamkniecia)
+        public Placówka(List<Lekarz> lekarze, List<Pacjent> pacjenci, List<Wizyta> wizyty, TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this(godzinaOtwarcia, godzinaZamkniecia)
         {
             Lekarze = lekarze;
             Pacjenci = pacjenci;
