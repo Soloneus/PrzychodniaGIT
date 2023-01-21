@@ -12,7 +12,10 @@ namespace PrzychodniaGIT
     [DataContract]
     [KnownType(typeof(Pacjent))]
     [KnownType(typeof(Lekarz))]
-    public class Placówka
+    /// <summary>
+    /// Klasa Placowka
+    /// </summary>
+    public class Placowka
     {
         List<Lekarz> lekarze;
         List<Pacjent> pacjenci;
@@ -22,21 +25,34 @@ namespace PrzychodniaGIT
         Dictionary<string, string> konta;
 
         [DataMember]
+        /// <summary>Właściwość GodzinaOtwarcia umożliwia dostęp do pola godzinaOtwarcia.
+        /// </summary>
         public TimeSpan GodzinaOtwarcia { get => godzinaOtwarcia; set => godzinaOtwarcia = value; }
         [DataMember]
+        /// <summary>Właściwość GodzinaZamkniecia umożliwia dostęp do pola godzinaZamkniecia.
+        /// </summary>
         public TimeSpan GodzinaZamkniecia { get => godzinaZamkniecia; set => godzinaZamkniecia = value; }
         [DataMember]
+        /// <summary>Właściwość Lekarze umożliwia dostęp do pola lekarze.
+        /// </summary>
         public List<Lekarz> Lekarze { get => lekarze; set => lekarze = value; }
         [DataMember]
+        /// <summary>Właściwość Wizyty umożliwia dostęp do pola wizyty.
+        /// </summary>
         public List<Wizyta> Wizyty { get => wizyty; set => wizyty = value; }
         [DataMember]
+        /// <summary>Właściwość Pacjenci umożliwia dostęp do pola pacjenci.
+        /// </summary>
         public List<Pacjent> Pacjenci { get => pacjenci; set => pacjenci = value; }
-
         [DataMember]
+        /// <summary>Właściwość Konta umożliwia dostęp do pola pacjenci.
+        /// </summary>
         public Dictionary<string, string> Konta { get => konta; set => konta = value; }
 
-
-        public Placówka()
+        /// <summary>
+        /// Konstruktor domyślny klasy <see cref="Placowka"/>.
+        /// </summary>
+        public Placowka()
         {
             Lekarze = new();
             Pacjenci = new();
@@ -45,19 +61,34 @@ namespace PrzychodniaGIT
             godzinaZamkniecia = new();
             Konta = new();
         }
-
-        public Placówka(TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this()
+        /// <summary>
+        /// Konstruktor parametryczny klasy <see cref="Placowka"/>.
+        /// </summary>
+        /// <param name="godzinaOtwarcia">Godzina otwarcia placówki</param>
+        /// <param name="godzinaZamkniecia">Godzina zamkniecia placówki</param>
+        public Placowka(TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this()
         {
             GodzinaOtwarcia = godzinaOtwarcia;
             GodzinaZamkniecia = godzinaZamkniecia;
         }
-        public Placówka(List<Lekarz> lekarze, List<Pacjent> pacjenci, List<Wizyta> wizyty, TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this(godzinaOtwarcia, godzinaZamkniecia)
+        /// <summary>
+        /// Konstruktor parametryczny klasy <see cref="Placowka"/>.
+        /// </summary>
+        /// <param name="lekarze">Lekarze w placówce</param>
+        /// <param name="pacjenci">Pacjenci w placówce</param>
+        /// <param name="wizyty">Wizyty w placówce</param>
+        /// <param name="godzinaOtwarcia">Godzina otwarcia placówki</param>
+        /// <param name="godzinaZamkniecia">Godzina zamkniecia placówki</param>
+        public Placowka(List<Lekarz> lekarze, List<Pacjent> pacjenci, List<Wizyta> wizyty, TimeSpan godzinaOtwarcia, TimeSpan godzinaZamkniecia) : this(godzinaOtwarcia, godzinaZamkniecia)
         {
             Lekarze = lekarze;
             Pacjenci = pacjenci;
             Wizyty = wizyty;
         }
-
+        /// <summary>
+        /// Dodaje wizyte
+        /// </summary>
+        /// <param name="wizyta">Wizyta</param>
         public void DodajWizyte(Wizyta wizyta)
         {
             if (wizyta == null) { return; }
@@ -67,6 +98,10 @@ namespace PrzychodniaGIT
                 Wizyty.Add(wizyta);
             }
         }
+        /// <summary>
+        /// Kończy aktualnie trwającą wizytę i dodaje diagnozę.
+        /// </summary>
+        /// <param name="diagnoza">Diagnoza</param>
         public void ZakonczWizyte(Diagnoza diagnoza) //jak w WPF bedzie to idk czy to trzeba bedzie zmienic na inne argumenty
         {
             Wizyta w1 = diagnoza.Wizyta;
@@ -74,7 +109,12 @@ namespace PrzychodniaGIT
             p1.DodajDiagnoze(diagnoza);
             Wizyty.Remove(w1);
         }
-
+        /// <summary>
+        /// Lekarz anuluje wizyte
+        /// </summary>
+        /// <param name="pesel">Pesel pacjenta</param>
+        /// <param name="data">Data wizyty</param>
+        /// <param name="godzina">Godzina wizyty</param>
         public void AnulujWizyteJakoLekarz(string pesel, DateTime data, TimeSpan godzina)
         {
             Wizyta wizyta = Wizyty.FirstOrDefault(w => w.Pacjent.Pesel == pesel && w.Data == data && w.Godzina == godzina);
@@ -85,6 +125,12 @@ namespace PrzychodniaGIT
             }
         }
 
+        /// <summary>
+        /// Pacjent anuluje wizyte
+        /// </summary>
+        /// <param name="pesel">Pesel pacjenta</param>
+        /// <param name="data">Data wizyty</param>
+        /// <param name="godzina">Godzina wizyty</param>
         public void AnulujWizytePacjent(string pesel, DateTime data, TimeSpan godzina)
         {
             Wizyta wizyta = Wizyty.FirstOrDefault(w => w.Pacjent.Pesel == pesel && w.Data == data && w.Godzina == godzina);
@@ -94,24 +140,38 @@ namespace PrzychodniaGIT
                 wizyta.Lekarz.Zaplanowane_Wizyty.Remove(new Tuple<DateTime, TimeSpan>(data, godzina));
             }
         }
+        /// <summary>
+        /// Dodaje pacjenta
+        /// </summary>
+        /// <param name="p1">Pacjent</param>
         public void DodajPacjenta(Pacjent p1)
         {
             if (p1 == null) { return; }
             Pacjenci.Add(p1);
         }
-
+        /// <summary>
+        /// Dodaje konto
+        /// </summary>
+        /// <param name="pesel">Pesel przypisany do konta</param>
+        /// <param name="haslo">Hasło przypisane do konta</param>
         public void DodajKonto(string pesel, string haslo)
         {
             if (pesel == null || haslo == null) { return; }
             Konta.Add(pesel, haslo);
         }
-
+        /// <summary>
+        /// Dodaje lekarza
+        /// </summary>
+        /// <param name="l1">Lekarz</param>
         public void DodajLekarza(Lekarz l1)
         {
             if (l1 == null || Lekarze.Find(p => p.Pesel == l1.Pesel) != null) { return; }
             Lekarze.Add(l1);
         }
-
+        /// <summary>
+        /// Usuwa lekarza
+        /// </summary>
+        /// <param name="pesel">Pesel lekarza do usunięcia</param>
         public void UsunLekarza(string pesel)
         {
             Lekarz l1 = Lekarze.Find(p => p.Pesel == pesel);
@@ -119,7 +179,10 @@ namespace PrzychodniaGIT
             Wizyty.RemoveAll(p => p.Lekarz.Pesel == l1.Pesel);
             Lekarze.Remove(l1);
         }
-
+        /// <summary>
+        /// Usuwa pacjenta
+        /// </summary>
+        /// <param name="pesel">Pesel pacjenta do usunięcia</param>
         public void UsuńPacjenta(string pesel)
         {
             List<Wizyta> wizytyanulowane = new List<Wizyta>();
@@ -136,6 +199,11 @@ namespace PrzychodniaGIT
             Konta.Remove(pesel);
             Pacjenci.Remove(p1);
         }
+        /// <summary>
+        /// Wyszukuje historię pacjenta
+        /// </summary>
+        /// <param name="pesel">Pesel pacjenta</param>
+        /// <returns>Historia pacjenta w placówce</returns>
         public string HistoriaPacjenta(string pesel)
         {
             StringBuilder sb = new();
@@ -145,53 +213,90 @@ namespace PrzychodniaGIT
             if (sb.ToString() == null) { return "Brak historii"; }
             return sb.ToString();
         }
+        /// <summary>
+        /// Znajduje wszystkie wizyty lekarza w danym dniu
+        /// </summary>
+        /// <param name="pesel">Pesel lekarza</param>
+        /// <param name="data">Data wizyty lekarza</param>
+        /// <returns>Lista wizyt</returns>
         public List<Wizyta> LekarzWDanymDniu(string pesel, DateTime data)
         {
 
             List<Wizyta> wizytyulekarza = Wizyty.FindAll(w => w.Lekarz.Pesel == pesel && w.Data.Date == data);
             return wizytyulekarza;
         }
+        /// <summary>
+        /// Wszystkie wizyty
+        /// </summary>
+        /// <returns>Lista wszystkich wizyt</returns>
         public List<Wizyta> WszystkieWizyty()
         {
             return Wizyty;
         }
-
+        /// <summary>
+        /// Wizyty pacjenta
+        /// </summary>
+        /// <param name="pesel">Pesel pacjenta</param>
+        /// <returns>Lista wizyt pacjenta o podanym peselu</returns>
         public List<Wizyta> WizytyPacjenta(string pesel)
         {
             List<Wizyta> wizyty = new();
             wizyty = Wizyty.FindAll(p => p.Pacjent.Pesel == pesel);
             return wizyty;
         }
-
+        /// <summary>
+        /// Zapisanie do pliku XML
+        /// </summary>
+        /// <param name="fname">Nazwa pliku</param>
         public void ZapiszDC(string fname)
         {
             using FileStream fs = new(fname, FileMode.Create);
-            DataContractSerializer dc = new(typeof(Placówka));
+            DataContractSerializer dc = new(typeof(Placowka));
             dc.WriteObject(fs, this);
         }
-        public static Placówka? OdczytDC(string fname)
+        /// <summary>
+        /// Odczytanie pliku XML
+        /// </summary>
+        /// <param name="fname">Nazwa pliku</param>
+        /// <returns></returns>
+        public static Placowka? OdczytDC(string fname)
         {
             if (!File.Exists(fname)) { return null; }
             using FileStream fs = new(fname, FileMode.Open);
-            DataContractSerializer dc = new(typeof(Placówka));
-            return dc.ReadObject(fs) as Placówka;
+            DataContractSerializer dc = new(typeof(Placowka));
+            return dc.ReadObject(fs) as Placowka;
         }
-
+        /// <summary>
+        /// Sortuje wizyty
+        /// </summary>
         public void SortujWizyta()
         {
             Wizyty.Sort();
         }
-
+        /// <summary>
+        /// Wyszukuje specjalizacje
+        /// </summary>
+        /// <param name="specjalizacja">Nazwa specjalizacji</param>
+        /// <returns>Lista lekarzy o podanej specjalizacji</returns>
         public List<Lekarz> WyszukajSpecjalizacja(string specjalizacja)
         {
             return Lekarze.FindAll(p => p.Specjalizacja.Equals(specjalizacja));
         }
-
+        /// <summary>
+        /// Wyszukuje wszystkie wizyty danego lekarza
+        /// </summary>
+        /// <param name="pesel">Pesel lekarza</param>
+        /// <returns>Lista wszystkich wizyt danego lekarza</returns>
         public List<Wizyta> WszystkieWizytyDanegoLekarza(string pesel)
         {
             return Wizyty.FindAll(p => p.Lekarz.Pesel == pesel);
         }
-
+        /// <summary>
+        /// Wszystkie wizyty danej osoby u danego lekarza.
+        /// </summary>
+        /// <param name="pesellekarza">Pesel lekarza</param>
+        /// <param name="peselpacjenta">Pesel pacjenta</param>
+        /// <returns>Lista wszystkich wizyt danej osoby u konkretnego lekarza</returns>
         public List<Wizyta> WszystkieWizytyDanejOsobyUDanegoLekarza(string pesellekarza, string peselpacjenta)
         {
             List<Wizyta> w = WszystkieWizytyDanegoLekarza(pesellekarza);
@@ -199,7 +304,12 @@ namespace PrzychodniaGIT
             return w.FindAll(p => p.Pacjent.Pesel == peselpacjenta);
 
         }
-
+        /// <summary>
+        /// Dodaje konto pacjenta jeżel nie jest jeszcze zarejestrowany
+        /// </summary>
+        /// <param name="pesel">Pesel pacjenta</param>
+        /// <param name="haslo">Hasło do konta pacjenta</param>
+        /// <returns>true jeżeli pacjent nie ma jeszcze konta lub false jeżeli pacjent posiada już konto</returns>
         public bool HasloRejestracjaPacjent(string pesel, string haslo)
         {
             if (Konta.ContainsKey(pesel))

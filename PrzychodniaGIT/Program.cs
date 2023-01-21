@@ -53,7 +53,7 @@ Pacjent p1 = new("Adam", "Małysz", "30-06-1980", "02263001875", EnumPlec.M);
 Pacjent p2 = new("Jan", "Nowak", "30-01-2006", "02463001875", EnumPlec.M);
 Pacjent p3 = new("Julia", "Jak", "30-01-1999", "02453001875", EnumPlec.K);
 
-Placówka przychodnia = new(new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0));
+Placowka przychodnia = new(new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0));
 przychodnia.DodajPacjenta(p1);
 przychodnia.DodajPacjenta(p2);
 przychodnia.DodajPacjenta(p3);
@@ -204,7 +204,7 @@ List<Diagnoza> ab = (przychodnia.Pacjenci.Find(p => p.Pesel == "02463001875").Hi
 string fname = "przychodnia.xml";
 przychodnia.ZapiszDC(fname);
 
-Placówka zespolodczyt = Placówka.OdczytDC(fname);
+Placowka zespolodczyt = Placowka.OdczytDC(fname);
 Console.WriteLine("Po odczycie:");
 
 Console.WriteLine(zespolodczyt.HistoriaPacjenta("02463001875"));
@@ -232,7 +232,7 @@ Console.WriteLine(zespolodczyt.Konta.Count.ToString());
 Console.WriteLine(przychodnia.HasloRejestracjaPacjent("12345678901", "123123"));
 
 
-
+//////////123
 
 
 //zespolodczyt.UsuńPacjenta("02263001875");

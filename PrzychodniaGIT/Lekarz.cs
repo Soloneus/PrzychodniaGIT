@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 
 namespace PrzychodniaGIT
 {
-
+    /// <summary>
+    /// Klasa Lekarz dziedzizcąca po klasie Osoba, implementuje interfejs ICloneable
+    /// </summary>
     [DataContract]
     public class Lekarz : Osoba, ICloneable
     {
@@ -19,16 +21,21 @@ namespace PrzychodniaGIT
         Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> godzinyPracy;
         Dictionary<Tuple<DateTime, TimeSpan>, bool> zaplanowane_Wizyty;
 
-
         [DataMember]
+        /// <summary>Właściwość Specjalizacja umożliwia dostęp do pola specjalizacja.
+        /// </summary>
         public string Specjalizacja { get => specjalizacja; set => specjalizacja = value; }
-
         [DataMember]
+        /// <summary>Właściwość GodzinyPracy umożliwia dostęp do pola godzinyPracy.
+        /// </summary>
         public Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> GodzinyPracy { get => godzinyPracy; set => godzinyPracy = value; }
-
         [DataMember]
+        /// <summary>Właściwość Zaplanowane_Wizyty umożliwia dostęp do pola zaplanowane_wizyty.
+        /// </summary>
         public Dictionary<Tuple<DateTime, TimeSpan>, bool> Zaplanowane_Wizyty { get => zaplanowane_Wizyty; set => zaplanowane_Wizyty = value; }
-
+        /// <summary>
+        /// Konstruktor domyślny klasy Lekarz
+        /// </summary>
         public Lekarz()
         {
             Specjalizacja = string.Empty;
@@ -39,7 +46,15 @@ namespace PrzychodniaGIT
             DataUrodzenia = new();
             Pesel = "00000000000";
         }
-
+        /// <summary>
+        /// Konstruktor parametrczyny klasy Lekarz
+        /// </summary>
+        /// <param name="imie">Imie lekarza</param>
+        /// <param name="nazwisko">Nazwisko lekarza</param>
+        /// <param name="dataUrodzenia">Data urodzenia lekarza</param>
+        /// <param name="pesel">Pesel lekarza</param>
+        /// <param name="plec">Płeć lekarza</param>
+        /// <exception cref="ArgumentException">Wyjątek zwracany w przypadku ustawienia niepoprawnej daty urodzenia lekarza</exception>
         public Lekarz(string imie, string nazwisko, string dataUrodzenia, string pesel, EnumPlec plec)
         {
             if (!DateTime.TryParseExact(dataUrodzenia,
@@ -56,14 +71,30 @@ namespace PrzychodniaGIT
             Pesel = pesel;
             Plec = plec;
         }
-        public Lekarz(string imie, string nazwisko, string dataUrodzenia, string pesel, EnumPlec plec,
-            string specjalizacja, Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> godzinyPracy) : base(imie, nazwisko, dataUrodzenia, pesel, plec)
+        /// <summary>
+        /// Konstruktor parametryczny klasy Lekarz dziedziczący po konstrukotrze bazowym
+        /// </summary>
+        /// <param name="imie">Imie lekarza</param>
+        /// <param name="nazwisko">Nazwisko lekarza</param>
+        /// <param name="dataUrodzenia">Data urodzenia lekarza</param>
+        /// <param name="pesel">Pesel lekarza</param>
+        /// <param name="plec">Płeć lekarza</param>
+        /// <param name="specjalizacja">Specjalizacja lekarza</param>
+        /// <param name="godzinyPracy">Godziny pracy lekarza</param>
+        public Lekarz(string imie, string nazwisko, string dataUrodzenia, string pesel, EnumPlec plec,string specjalizacja, Dictionary<DayOfWeek, Tuple<TimeSpan, TimeSpan>> godzinyPracy)
+            : base(imie, nazwisko, dataUrodzenia, pesel, plec)
         {
             Specjalizacja = specjalizacja;
             GodzinyPracy = godzinyPracy;
             zaplanowane_Wizyty = new();
         }
-
+        /// <summary>
+        /// Sprawdza czy można umówić wizytę u lekarza w danym dniu o konkretnej godzinie.
+        /// </summary>
+        /// <param name="data"> Data wizyty</param>
+        /// <param name="godzina">Godzina wizyty</param>
+        /// <returns>Zwraca `true` jeżeli można umówić wizytę lub `false` jeżeli nie można umówić wizyty</returns>
+        /// <exception cref="ArgumentException"> Wyjątek zgłaszany w przypadku niepoprawnej daty wizyty.</exception>
         public bool SprawdzCzyMoznaUmowic(string data, TimeSpan godzina)
         {
 
@@ -115,7 +146,12 @@ namespace PrzychodniaGIT
                 return false;
             }
         }
-
+        /// <summary>
+        /// Tworzy listę lekarzy.
+        /// </summary>
+        /// <returns>
+        /// String który reprezentuje tą instancję.
+        /// </returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -125,7 +161,12 @@ namespace PrzychodniaGIT
             }
             return $"{Imie} {Nazwisko}, Specjalizacja: {Specjalizacja}\n{sb}";
         }
-
+        /// <summary>
+        /// Tworzy nowy obiekt, który jest kopią bieżącej instancji.
+        /// </summary>
+        /// <returns>
+        /// Nowy obiekt będący kopią tej instancji.
+        /// </returns>
         public object Clone()
         {
             return MemberwiseClone();

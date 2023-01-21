@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 namespace PrzychodniaGIT
 {
     [DataContract]
+    /// <summary>
+    /// Klasa Wizyta implementująca interfejs IComparable
+    /// </summary>
     public class Wizyta : IComparable<Wizyta>
     {
         DateTime data;
@@ -18,15 +21,24 @@ namespace PrzychodniaGIT
         TimeSpan godzina;
 
         [DataMember]
+        /// <summary>Właściwość Data umożliwia dostęp do pola data.
+        /// </summary>
         public DateTime Data { get => data; set => data = value; }
         [DataMember]
+        /// <summary>Właściwość Lekarz umożliwia dostęp do pola lekarz.
+        /// </summary>
         public Lekarz Lekarz { get => lekarz; set => lekarz = value; }
         [DataMember]
+        /// <summary>Właściwość Pacjent umożliwia dostęp do pola pacjent.
+        /// </summary>
         public Pacjent Pacjent { get => pacjent; set => pacjent = value; }
-
         [DataMember]
+        /// <summary>Właściwość Godzina umożliwia dostęp do pola godzina.
+        /// </summary>
         public TimeSpan Godzina { get => godzina; set => godzina = value; }
-
+        /// <summary>
+        /// Konstruktor domyślny klasy Wizyta
+        /// </summary>
         public Wizyta()
         {
             Lekarz = new Lekarz();
@@ -34,6 +46,14 @@ namespace PrzychodniaGIT
             Data = new DateTime();
             Godzina = new TimeSpan();
         }
+        /// <summary>
+        /// Konstruktor parametryczny klasy <see cref="Wizyta"/>.
+        /// </summary>
+        /// <param name="data">Data wizyty</param>
+        /// <param name="lekarz">Lekarz uczestniczący w wizycie</param>
+        /// <param name="pacjent">Pacjent uczestniczący w wizycie</param>
+        /// <param name="godzina">Godzina wizyty</param>
+        /// <exception cref="DataException">Zły format daty wizyty</exception>
         public Wizyta(string data, Lekarz lekarz, Pacjent pacjent, TimeSpan godzina) : this()
         {
             if (!DateTime.TryParseExact(data,
@@ -49,13 +69,25 @@ namespace PrzychodniaGIT
             Godzina = godzina;
         }
 
-
+        /// <summary>
+        /// Reprezentuje dane dotyczace wizyty
+        /// </summary>
+        /// <returns>
+        /// String który reprezentuje tą instancję.
+        /// </returns>
         public override string ToString()
         {
             return $"Pacjent: {pacjent.Imie} {pacjent.Nazwisko} ({pacjent.Pesel})\nLekarz: {lekarz.Imie} {lekarz.Nazwisko} ({lekarz.Pesel})" +
                 $"\nData: {Data:dd-MM-yyyy} {Godzina.Hours:00}:{Godzina.Minutes:00}\n";
         }
-
+        /// <summary>
+        /// Porównuje bieżącą instancję z innym obiektem tego samego typu i zwraca liczbę całkowitą wskazującą, czy bieżące wystąpienie poprzedza, następuje lub występuje w tej samej pozycji w porządku sortowania co inny obiekt.
+        /// </summary>
+        /// <param name="other">Obiekt do porównania z tym wystąpieniem.</param>
+        /// <returns>
+        /// Wartość, która wskazuje względną kolejność porównywanych obiektów. Wartość zwracana ma następujące znaczenie:
+        /// <list type="table"><listheader><term> Wartość</term><description> Znaczenie</description></listheader><item><term> Mniej niż 0</term><description> To wystąpienie poprzedza <paramref name="other" /> w porządku sortowania.</description></item><item><term> 0</term><description> To wystąpienie występuje w tej samej pozycji w porządku sortowania co<paramref name="other" />.</description></item><item><term> Więcej niż 0</term><description> Ta instancja następuje po <paramref name="other" /> w porządku sortowania.</description></item></list>
+        /// </returns>
         public int CompareTo(Wizyta? other)
         {
             if (other == null) return 1;
