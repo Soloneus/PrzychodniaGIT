@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PrzychodniaGIT;
 
-//k
+
 namespace PrzychodniaGIT
 {
     [DataContract]
