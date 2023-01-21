@@ -60,7 +60,7 @@ namespace PrzychodniaGIT
 
         public void DodajWizyte(Wizyta wizyta)
         {
-            if (wizyta == null || Wizyty.Find(p => p.Lekarz.Pesel == wizyta.Lekarz.Pesel) == null) { return; }
+            if (wizyta == null) { return; }
             if (wizyta.Lekarz.SprawdzCzyMoznaUmowic(wizyta.Data.ToShortDateString(), wizyta.Godzina))
             {
                 wizyta.Lekarz.Zaplanowane_Wizyty.Add(new Tuple<DateTime, TimeSpan>(wizyta.Data, wizyta.Godzina), true);
@@ -83,7 +83,6 @@ namespace PrzychodniaGIT
                 Wizyty.Remove(wizyta);
                 wizyta.Lekarz.Zaplanowane_Wizyty.Remove(new Tuple<DateTime, TimeSpan>(data, godzina));
             }
-            return;
         }
 
         public void AnulujWizytePacjent(string pesel, DateTime data, TimeSpan godzina)
@@ -94,7 +93,6 @@ namespace PrzychodniaGIT
                 Wizyty.Remove(wizyta);
                 wizyta.Lekarz.Zaplanowane_Wizyty.Remove(new Tuple<DateTime, TimeSpan>(data, godzina));
             }
-            return;
         }
         public void DodajPacjenta(Pacjent p1)
         {
@@ -118,9 +116,10 @@ namespace PrzychodniaGIT
         {
             Lekarz l1 = Lekarze.Find(p => p.Pesel == pesel);
             if (Lekarze.Find(p => p.Pesel == pesel) == null) { return; }
-            Wizyty.ToList().RemoveAll(p => p.Lekarz.Pesel == pesel);
+            Wizyty.RemoveAll(p => p.Lekarz.Pesel == l1.Pesel);
             Lekarze.Remove(l1);
         }
+
         public void UsuńPacjenta(string pesel)
         {
             List<Wizyta> wizytyanulowane = new List<Wizyta>();
@@ -133,7 +132,7 @@ namespace PrzychodniaGIT
                 w.Lekarz.Zaplanowane_Wizyty.Remove(new Tuple<DateTime, TimeSpan>(w.Data, w.Godzina));
             }
 
-            Wizyty.RemoveAll(p => p.Pacjent.Pesel == pesel);
+            Wizyty.RemoveAll(p => p.Pacjent.Pesel == p1.Pesel);
             Konta.Remove(pesel);
             Pacjenci.Remove(p1);
         }
